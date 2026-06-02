@@ -1,5 +1,6 @@
-import React, { useState, FormEvent } from 'react';
-import { DailyGoals } from '../types';
+import { useState } from 'react';
+import type { FormEvent } from 'react';
+import type { DailyGoals } from '../types/index';
 
 interface GoalsSettingsProps {
   goals: DailyGoals;

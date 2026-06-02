@@ -12,7 +12,7 @@ export interface IntakeEntry {
 }
 
 export interface DailyData {
-  date: string;
+  date: string; // YYYY-MM-DD
   goals: DailyGoals;
   entries: IntakeEntry[];
 }

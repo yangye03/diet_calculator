@@ -1,4 +1,5 @@
-import React, { useState, useRef, FormEvent } from 'react';
+import { useState, useRef } from 'react';
+import type { FormEvent } from 'react';
 
 interface IntakeFormProps {
   onSubmit: (carbs: number, protein: number, note: string) => void;
@@ -13,11 +14,17 @@ export function IntakeForm({ onSubmit }: IntakeFormProps) {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    const carbsNum = parseFloat(carbs);
-    const proteinNum = parseFloat(protein);
+    const carbsNum = carbs === '' ? 0 : parseFloat(carbs);
+    const proteinNum = protein === '' ? 0 : parseFloat(protein);
 
-    if (isNaN(carbsNum) || isNaN(proteinNum) || carbsNum < 0 || proteinNum < 0) {
-      alert('请输入有效的数值');
+    // 至少需要填写一个
+    if ((isNaN(carbsNum) && isNaN(proteinNum)) || (carbsNum === 0 && proteinNum === 0)) {
+      alert('请至少输入碳水或蛋白质其中一项');
+      return;
+    }
+
+    if (carbsNum < 0 || proteinNum < 0) {
+      alert('数值不能为负数');
       return;
     }
 
@@ -29,7 +36,10 @@ export function IntakeForm({ onSubmit }: IntakeFormProps) {
     carbsInputRef.current?.focus();
   };
 
-  const isValid = carbs !== '' && protein !== '' && parseFloat(carbs) >= 0 && parseFloat(protein) >= 0;
+  // 至少填写一个且非负数即可
+  const hasCarbs = carbs !== '' && parseFloat(carbs) >= 0;
+  const hasProtein = protein !== '' && parseFloat(protein) >= 0;
+  const isValid = hasCarbs || hasProtein;
 
   return (
     <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
@@ -37,7 +47,7 @@ export function IntakeForm({ onSubmit }: IntakeFormProps) {
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            碳水化合物 (g)
+            碳水化合物 (g) <span className="text-gray-400 text-xs">可选</span>
           </label>
           <input
             ref={carbsInputRef}
@@ -54,7 +64,7 @@ export function IntakeForm({ onSubmit }: IntakeFormProps) {
 
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            蛋白质 (g)
+            蛋白质 (g) <span className="text-gray-400 text-xs">可选</span>
           </label>
           <input
             type="number"

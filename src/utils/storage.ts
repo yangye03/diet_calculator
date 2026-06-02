@@ -1,4 +1,4 @@
-import { DailyData, DailyGoals, IntakeEntry } from '../types';
+import type { DailyData, DailyGoals, IntakeEntry } from '../types';
 import { getTodayString } from './dateUtils';
 
 const STORAGE_KEY = 'diet_tracker_data';

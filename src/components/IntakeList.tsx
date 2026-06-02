@@ -1,5 +1,4 @@
-import React from 'react';
-import { IntakeEntry } from '../types';
+import type { IntakeEntry } from '../types/index';
 import { formatTime } from '../utils/dateUtils';
 
 interface IntakeListProps {

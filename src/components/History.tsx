@@ -1,5 +1,4 @@
-import React from 'react';
-import { DailyData } from '../types';
+import type { DailyData } from '../types/index';
 import { formatDate } from '../utils/dateUtils';
 import { calculateRemaining } from '../utils/storage';
 

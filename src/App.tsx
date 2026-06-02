@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TabType, DailyData } from './types';
+import type { TabType, DailyData } from './types/index';
 import { RemainingCard } from './components/RemainingCard';
 import { IntakeForm } from './components/IntakeForm';
 import { IntakeList } from './components/IntakeList';
