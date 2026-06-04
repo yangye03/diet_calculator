@@ -14,7 +14,7 @@ export default defineConfig({
         name: '饮食追踪',
         short_name: '饮食追踪',
         description: '健身饮食记录应用，追踪每日碳水和蛋白质摄入',
-        theme_color: '#10b981',
+        theme_color: '#0071e3',
         background_color: '#ffffff',
         display: 'standalone',
         icons: [

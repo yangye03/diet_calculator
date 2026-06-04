@@ -19,7 +19,22 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: #fafafa;
+  color: #1d1d1f;
+  background-color: #f5f5f7;
+  background-image:
+    radial-gradient(80rem 44rem at 50% -22%, rgba(255, 255, 255, 0.9), transparent 60%),
+    radial-gradient(60rem 60rem at 100% -10%, rgba(0, 113, 227, 0.05), transparent 55%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark body {
+  color: #f5f5f7;
+  background-color: #000000;
+  background-image:
+    radial-gradient(70rem 44rem at 50% -25%, rgba(232, 114, 43, 0.10), transparent 60%),
+    radial-gradient(60rem 60rem at 100% 0%, rgba(0, 113, 227, 0.08), transparent 55%);
 }
 
 #root {

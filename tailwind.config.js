@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -7,17 +8,22 @@ export default {
   theme: {
     extend: {
       colors: {
+        ultra: {
+          DEFAULT: '#e8722b',
+          500: '#e8722b',
+          600: '#d3611f',
+        },
         primary: {
-          50: '#f0fdf4',
-          100: '#dcfce7',
-          200: '#bbf7d0',
-          300: '#86efac',
-          400: '#4ade80',
-          500: '#10b981',
-          600: '#059669',
-          700: '#047857',
-          800: '#065f46',
-          900: '#064e3b',
+          50: '#eef6ff',
+          100: '#d9eafe',
+          200: '#bcd9fd',
+          300: '#8fc0fb',
+          400: '#5aa0f5',
+          500: '#0071e3',
+          600: '#0062c4',
+          700: '#0050a0',
+          800: '#003f7d',
+          900: '#00305f',
         },
         accent: {
           50: '#fffbeb',
@@ -43,6 +49,10 @@ export default {
           800: '#991b1b',
           900: '#7f1d1d',
         },
+      },
+      boxShadow: {
+        soft: '0 10px 30px -12px rgba(0, 0, 0, 0.12), 0 4px 10px -6px rgba(0, 0, 0, 0.06)',
+        'soft-lg': '0 24px 60px -20px rgba(0, 0, 0, 0.18), 0 8px 20px -10px rgba(0, 0, 0, 0.08)',
       },
     },
   },

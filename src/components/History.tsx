@@ -11,9 +11,9 @@ export function History({ allData }: HistoryProps) {
 
   if (allData.length === 0) {
     return (
-      <div className="bg-white rounded-2xl shadow-lg p-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">历史记录</h2>
-        <div className="text-center py-8 text-gray-400">
+      <div className="bg-white/70 dark:bg-white/[0.06] backdrop-blur-xl rounded-3xl shadow-soft ring-1 ring-black/5 dark:ring-white/10 p-6">
+        <h2 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white mb-6">历史记录</h2>
+        <div className="text-center py-8 text-gray-400 dark:text-gray-500">
           还没有历史记录
         </div>
       </div>
@@ -21,9 +21,9 @@ export function History({ allData }: HistoryProps) {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">历史记录</h2>
-      <div className="space-y-4">
+    <div className="bg-white/70 dark:bg-white/[0.06] backdrop-blur-xl rounded-3xl shadow-soft ring-1 ring-black/5 dark:ring-white/10 p-6">
+      <h2 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white mb-6">历史记录</h2>
+      <div className="space-y-3">
         {sortedData.map((day) => {
           const stats = calculateRemaining(day.entries, day.goals);
           const carbsComplete = stats.carbs.consumed >= stats.carbs.total * 0.9;
@@ -34,37 +34,37 @@ export function History({ allData }: HistoryProps) {
           return (
             <div
               key={day.date}
-              className="p-4 border-2 border-gray-200 rounded-lg"
+              className="p-4 bg-gray-50/70 dark:bg-white/[0.04] rounded-2xl ring-1 ring-black/5 dark:ring-white/10"
             >
               <div className="flex items-center justify-between mb-3">
-                <div className="text-lg font-bold text-gray-900">
+                <div className="text-lg font-bold text-gray-900 dark:text-white">
                   {formatDate(day.date)}
                 </div>
                 <div className={`px-3 py-1 rounded-full text-sm font-medium ${
                   isOver
-                    ? 'bg-accent-100 text-accent-700'
+                    ? 'bg-accent-100 text-accent-700 dark:bg-accent-500/15 dark:text-accent-300'
                     : isComplete
-                    ? 'bg-primary-100 text-primary-700'
-                    : 'bg-gray-100 text-gray-600'
+                    ? 'bg-primary-100 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300'
+                    : 'bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-400'
                 }`}>
                   {isOver ? '⚠ 超标' : isComplete ? '✓ 完成' : '未完成'}
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <div className="text-gray-500">碳水</div>
-                  <div className="font-medium text-gray-900">
+                  <div className="text-gray-500 dark:text-gray-400">碳水</div>
+                  <div className="font-medium text-gray-900 dark:text-white">
                     {Math.round(stats.carbs.consumed)} / {stats.carbs.total}g
                   </div>
                 </div>
                 <div>
-                  <div className="text-gray-500">蛋白质</div>
-                  <div className="font-medium text-gray-900">
+                  <div className="text-gray-500 dark:text-gray-400">蛋白质</div>
+                  <div className="font-medium text-gray-900 dark:text-white">
                     {Math.round(stats.protein.consumed)} / {stats.protein.total}g
                   </div>
                 </div>
               </div>
-              <div className="mt-2 text-xs text-gray-500">
+              <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
                 {day.entries.length} 条记录
               </div>
             </div>
