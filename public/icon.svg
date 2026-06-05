@@ -1,5 +1,87 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="20" fill="#0071e3"/>
-  <path d="M30 40 L50 60 L70 40" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <circle cx="50" cy="70" r="5" fill="white"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- 背景：iOS 风格的柔和白 -->
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f3f4f3"/>
+    </linearGradient>
+    <!-- 花球：深浅绿渐变，营造立体感 -->
+    <radialGradient id="crown" cx="42%" cy="34%" r="72%">
+      <stop offset="0" stop-color="#5aa84b"/>
+      <stop offset="0.55" stop-color="#3f8b34"/>
+      <stop offset="1" stop-color="#2c6b27"/>
+    </radialGradient>
+    <radialGradient id="cluster" cx="38%" cy="32%" r="70%">
+      <stop offset="0" stop-color="#69ba53"/>
+      <stop offset="1" stop-color="#347a2c"/>
+    </radialGradient>
+    <!-- 茎：清新的浅绿 -->
+    <linearGradient id="stalk" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8cc63f"/>
+      <stop offset="0.5" stop-color="#aedb6e"/>
+      <stop offset="1" stop-color="#7eb539"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 圆角方形背景 -->
+  <rect x="0" y="0" width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- 茎部 -->
+  <g>
+    <path d="M214 300
+             C210 360 198 392 196 414
+             C195 430 210 440 256 440
+             C302 440 317 430 316 414
+             C314 392 302 360 298 300 Z"
+          fill="url(#stalk)"/>
+    <!-- 茎部分叉小枝 -->
+    <path d="M214 332 C188 336 174 350 168 372 C188 360 204 356 220 356 Z" fill="url(#stalk)"/>
+    <path d="M298 332 C324 336 338 350 344 372 C324 360 308 356 292 356 Z" fill="url(#stalk)"/>
+    <!-- 茎部高光 -->
+    <path d="M236 312 C233 360 226 392 224 412 C223 424 230 430 244 430 C240 392 244 352 250 312 Z"
+          fill="#c4e89a" opacity="0.55"/>
+  </g>
+
+  <!-- 花冠：多个圆形堆叠形成蓬松质感 -->
+  <g>
+    <!-- 底层大花球 -->
+    <circle cx="256" cy="210" r="118" fill="url(#crown)"/>
+    <circle cx="160" cy="240" r="78" fill="url(#cluster)"/>
+    <circle cx="352" cy="240" r="78" fill="url(#cluster)"/>
+    <circle cx="200" cy="160" r="74" fill="url(#cluster)"/>
+    <circle cx="312" cy="160" r="74" fill="url(#cluster)"/>
+    <circle cx="256" cy="120" r="70" fill="url(#cluster)"/>
+    <circle cx="120" cy="200" r="52" fill="url(#cluster)"/>
+    <circle cx="392" cy="200" r="52" fill="url(#cluster)"/>
+    <circle cx="256" cy="270" r="92" fill="url(#crown)"/>
+
+    <!-- 表面颗粒：浅绿小点制造粗糙花蕾质感 -->
+    <g fill="#7ec45f" opacity="0.85">
+      <circle cx="210" cy="150" r="13"/>
+      <circle cx="256" cy="128" r="14"/>
+      <circle cx="300" cy="150" r="13"/>
+      <circle cx="170" cy="190" r="12"/>
+      <circle cx="232" cy="184" r="12"/>
+      <circle cx="282" cy="184" r="12"/>
+      <circle cx="340" cy="190" r="12"/>
+      <circle cx="146" cy="232" r="11"/>
+      <circle cx="200" cy="232" r="13"/>
+      <circle cx="256" cy="222" r="14"/>
+      <circle cx="312" cy="232" r="13"/>
+      <circle cx="366" cy="232" r="11"/>
+      <circle cx="180" cy="276" r="12"/>
+      <circle cx="232" cy="272" r="13"/>
+      <circle cx="284" cy="272" r="13"/>
+      <circle cx="332" cy="276" r="12"/>
+      <circle cx="256" cy="300" r="13"/>
+    </g>
+    <!-- 高光小点 -->
+    <g fill="#a6da7e" opacity="0.7">
+      <circle cx="220" cy="138" r="6"/>
+      <circle cx="190" cy="178" r="6"/>
+      <circle cx="158" cy="220" r="6"/>
+      <circle cx="244" cy="206" r="6"/>
+      <circle cx="208" cy="258" r="6"/>
+    </g>
+  </g>
 </svg>
