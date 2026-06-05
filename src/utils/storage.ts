@@ -23,6 +23,15 @@ export function getGoals(): DailyGoals {
 
 export function saveGoals(goals: DailyGoals): void {
   localStorage.setItem(GOALS_KEY, JSON.stringify(goals));
+
+  // 同步更新今日记录的目标，使今日剩余量按新目标重新计算（历史日期保留原有目标）
+  const today = getTodayString();
+  const allData = getAllData();
+  const index = allData.findIndex(d => d.date === today);
+  if (index >= 0) {
+    allData[index] = { ...allData[index], goals };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(allData));
+  }
 }
 
 export function getTodayData(): DailyData {
