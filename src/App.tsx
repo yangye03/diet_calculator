@@ -56,18 +56,20 @@ function App() {
 
   const stats = calculateRemaining(todayData.entries, todayData.goals);
 
+  const todayLabel = new Date().toLocaleDateString('zh-CN', {
+    month: 'long',
+    day: 'numeric',
+    weekday: 'long',
+  });
+
   return (
-    <div className="min-h-screen pb-24">
-      <div className="max-w-2xl mx-auto px-4 py-6">
-        <header className="mb-8 mt-2 flex items-start justify-between">
-          <div>
-            <h1 className="text-4xl font-semibold tracking-tight text-gray-900 dark:text-white">饮食追踪</h1>
-            <p className="text-gray-500 dark:text-gray-400 mt-2 text-lg">记录每日营养摄入</p>
-          </div>
+    <div className="min-h-screen pt-[env(safe-area-inset-top)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] pb-[calc(9.5rem+env(safe-area-inset-bottom))]">
+      <div className="max-w-md mx-auto px-4 py-6">
+        <header className="mb-3 flex items-center justify-end">
           <button
             onClick={toggleTheme}
             aria-label="切换主题"
-            className="mt-1 w-11 h-11 flex items-center justify-center rounded-full bg-white/70 dark:bg-white/10 backdrop-blur-xl ring-1 ring-black/5 dark:ring-white/10 shadow-soft text-gray-700 dark:text-yellow-300 hover:bg-white dark:hover:bg-white/15 transition-all active:scale-95"
+            className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-100/70 dark:bg-white/[0.06] ring-1 ring-black/5 dark:ring-white/10 text-gray-500 dark:text-gray-400 hover:bg-gray-200/70 dark:hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/60 transition-colors active:scale-95"
           >
             {isDark ? (
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -83,6 +85,10 @@ function App() {
 
         {activeTab === 'today' && (
           <div>
+            <div className="mb-6">
+              <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">今日</h1>
+              <p className="text-base text-gray-500 dark:text-gray-400 mt-1">{todayLabel}</p>
+            </div>
             <RemainingCard carbs={stats.carbs} protein={stats.protein} />
             <IntakeForm onSubmit={handleAddEntry} />
 
@@ -110,37 +116,48 @@ function App() {
         {activeTab === 'history' && <History allData={allData} />}
       </div>
 
-      <nav className="fixed bottom-0 left-0 right-0 bg-white/70 dark:bg-black/60 backdrop-blur-xl border-t border-gray-200/70 dark:border-white/10">
-        <div className="max-w-2xl mx-auto px-4 py-3 flex justify-around">
+      <nav className="fixed bottom-0 left-0 right-0 bg-white/70 dark:bg-black/60 backdrop-blur-xl border-t border-gray-200/70 dark:border-white/10 pb-[env(safe-area-inset-bottom)]">
+        <div className="max-w-md mx-auto px-2 py-1.5 flex justify-around">
           <button
             onClick={() => setActiveTab('today')}
-            className={`flex-1 py-3 text-center font-medium rounded-full transition-all ${
+            className={`flex-1 flex flex-col items-center gap-1 py-1.5 transition-colors ${
               activeTab === 'today'
-                ? 'bg-ultra-500 text-white shadow-soft'
-                : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100/70 dark:hover:bg-white/10'
+                ? 'text-primary-500 dark:text-primary-400'
+                : 'text-gray-400 dark:text-gray-500'
             }`}
           >
-            今日
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 8.25h18M4.5 5.25h15A1.5 1.5 0 0121 6.75v12A1.5 1.5 0 0119.5 20.25h-15A1.5 1.5 0 013 18.75v-12A1.5 1.5 0 014.5 5.25z" />
+            </svg>
+            <span className="text-[11px] font-medium">今日</span>
           </button>
           <button
             onClick={() => setActiveTab('goals')}
-            className={`flex-1 py-3 text-center font-medium rounded-full transition-all mx-2 ${
+            className={`flex-1 flex flex-col items-center gap-1 py-1.5 transition-colors ${
               activeTab === 'goals'
-                ? 'bg-ultra-500 text-white shadow-soft'
-                : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100/70 dark:hover:bg-white/10'
+                ? 'text-primary-500 dark:text-primary-400'
+                : 'text-gray-400 dark:text-gray-500'
             }`}
           >
-            目标
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5a4.5 4.5 0 100-9 4.5 4.5 0 000 9z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 13.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+            </svg>
+            <span className="text-[11px] font-medium">目标</span>
           </button>
           <button
             onClick={() => setActiveTab('history')}
-            className={`flex-1 py-3 text-center font-medium rounded-full transition-all ${
+            className={`flex-1 flex flex-col items-center gap-1 py-1.5 transition-colors ${
               activeTab === 'history'
-                ? 'bg-ultra-500 text-white shadow-soft'
-                : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100/70 dark:hover:bg-white/10'
+                ? 'text-primary-500 dark:text-primary-400'
+                : 'text-gray-400 dark:text-gray-500'
             }`}
           >
-            历史
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 7.5V12l3 1.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span className="text-[11px] font-medium">历史</span>
           </button>
         </div>
       </nav>
