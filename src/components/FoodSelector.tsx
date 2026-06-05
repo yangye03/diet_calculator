@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import type { Food } from '../types';
 import { FOOD_DATABASE, FOOD_CATEGORIES } from '../data/foods';
 
@@ -13,12 +13,42 @@ export function FoodSelector({ onSelect, onClose }: FoodSelectorProps) {
   const [selectedFood, setSelectedFood] = useState<Food | null>(null);
   const [serving, setServing] = useState('100');
   const [mounted, setMounted] = useState(false);
+  const [dragY, setDragY] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const draggingRef = useRef(false);
+  const startYRef = useRef(0);
+  const dragYRef = useRef(0);
 
   // 进入动画
   useEffect(() => {
     const id = requestAnimationFrame(() => setMounted(true));
     return () => cancelAnimationFrame(id);
   }, []);
+
+  // 下拉关闭手势
+  const handleDragStart = (e: React.PointerEvent) => {
+    draggingRef.current = true;
+    startYRef.current = e.clientY;
+    setDragging(true);
+    e.currentTarget.setPointerCapture?.(e.pointerId);
+  };
+  const handleDragMove = (e: React.PointerEvent) => {
+    if (!draggingRef.current) return;
+    const delta = e.clientY - startYRef.current;
+    dragYRef.current = delta > 0 ? delta : 0;
+    setDragY(dragYRef.current);
+  };
+  const handleDragEnd = () => {
+    if (!draggingRef.current) return;
+    draggingRef.current = false;
+    setDragging(false);
+    if (dragYRef.current > 100) {
+      onClose();
+    } else {
+      dragYRef.current = 0;
+      setDragY(0);
+    }
+  };
 
   // 过滤食物列表
   const filteredFoods = useMemo(() => {
@@ -66,20 +96,32 @@ export function FoodSelector({ onSelect, onClose }: FoodSelectorProps) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`w-full max-w-md bg-[#f2f2f7]/95 dark:bg-[#1c1c1e]/95 backdrop-blur-2xl rounded-t-3xl shadow-soft-lg ring-1 ring-black/10 dark:ring-white/10 max-h-[85vh] flex flex-col transform transition-transform duration-300 ease-out ${
-          mounted ? 'translate-y-0' : 'translate-y-full'
-        }`}
+        style={{
+          transform: mounted ? `translateY(${dragY}px)` : 'translateY(100%)',
+          transition: dragging ? 'none' : 'transform 300ms ease-out',
+        }}
+        className="w-full max-w-md bg-[#f2f2f7]/95 dark:bg-[#1c1c1e]/95 backdrop-blur-2xl rounded-t-3xl shadow-soft-lg ring-1 ring-black/10 dark:ring-white/10 max-h-[85vh] flex flex-col"
       >
-        {/* 拖动手柄 */}
-        <div className="shrink-0 flex justify-center pt-2.5 pb-1">
-          <div className="w-9 h-1.5 rounded-full bg-gray-300 dark:bg-white/20" />
-        </div>
+        {/* 拖动区域：手柄 + 头部，可下拉关闭 */}
+        <div
+          onPointerDown={handleDragStart}
+          onPointerMove={handleDragMove}
+          onPointerUp={handleDragEnd}
+          onPointerCancel={handleDragEnd}
+          style={{ touchAction: 'none' }}
+          className="shrink-0 cursor-grab active:cursor-grabbing"
+        >
+          {/* 拖动手柄 */}
+          <div className="flex justify-center pt-2.5 pb-1.5">
+            <div className="w-10 h-1.5 rounded-full bg-gray-300 dark:bg-white/25" />
+          </div>
 
-        {/* 头部 */}
-        <div className="shrink-0 flex items-start justify-between px-5 pt-1 pb-3">
+          {/* 头部 */}
+          <div className="flex items-start justify-between px-5 pt-1 pb-3">
           {selectedFood ? (
             <button
               onClick={() => setSelectedFood(null)}
+              onPointerDown={(e) => e.stopPropagation()}
               className="flex items-center gap-1 text-primary-500 dark:text-primary-400 font-medium -ml-1 active:scale-95 transition-transform"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -95,6 +137,7 @@ export function FoodSelector({ onSelect, onClose }: FoodSelectorProps) {
           )}
           <button
             onClick={onClose}
+            onPointerDown={(e) => e.stopPropagation()}
             aria-label="关闭"
             className="w-8 h-8 shrink-0 flex items-center justify-center rounded-full bg-gray-200/70 dark:bg-white/10 text-gray-500 dark:text-gray-400 hover:bg-gray-300/70 dark:hover:bg-white/15 active:scale-95 transition-all"
           >
@@ -102,6 +145,7 @@ export function FoodSelector({ onSelect, onClose }: FoodSelectorProps) {
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
+          </div>
         </div>
 
         {selectedFood ? (
